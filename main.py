@@ -24,7 +24,9 @@ def create_go_board(board_size=19, grid_size=40, line_color=(0, 0, 0), border_si
 
 
 def generate_qr_matrix(data):
-    qr = qrcode.QRCode(box_size=10, border=2)
+    qr = qrcode.QRCode(box_size=1, 
+                       border=0,
+                       error_correction=qrcode.constants.ERROR_CORRECT_L)   ## change this for error correcting (currently on the lowest)
     qr.add_data(data)
     qr.make(fit=True)
 
@@ -54,10 +56,12 @@ def create_go_board_with_qr(data, grid_size=40, stone_scaling=1, border_size = 0
             board_image.paste(black_stone if qr_matrix[x][y] else white_stone, (cx, cy), black_stone)
 
     board_image.save("go_qrcode.png")
+    print(f"Image saved | board size: {qr_size}")
+    
 
 
-data_string = "wikipedia.com"
-
-create_go_board_with_qr(data_string, 
+data_string = "warwicksu.com/societies-sports/societies/gosociety/"
+create_go_board_with_qr(data_string,
+                        grid_size=80, 
                         stone_scaling=0.9, 
-                        border_size=50)
+                        border_size=100)
